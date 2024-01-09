@@ -5,18 +5,10 @@ import java.util.Scanner;
 
 
 public class Customer {
-
-
-
-
     private String customerName;
     private int customerPin;
 
-
-
-
     public Customer() {
-
 
     }
 

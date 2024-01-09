@@ -1,18 +1,9 @@
 import java.util.Scanner;
 import java.util.WeakHashMap;
 
-
-
-
 public class ATM {
 
-
-
-
     public ATM()    {
-
-
-
 
     }
     public void start() {
