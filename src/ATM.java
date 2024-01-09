@@ -35,11 +35,17 @@ public class ATM {
         }
         System.out.println("");
         System.out.print("Welcome to the ATM! ");
-        System.out.println("Menu \n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money Between Accounts\n4. Get Account Balances\n5. Get Transaction History\n6. Change PIN\n 7. Exit");
+        System.out.println("Menu \n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money Between Accounts\n4. Get Account Balances\n5. Get Transaction History\n6. Change PIN\n7. Exit");
 
-
-
-
+        int option = 9;
+        while (option > 7) {
+            System.out.print("Enter a valid number: ");
+            option = scan.nextInt();
+            scan.nextLine();
+            if (option > 7) {
+                System.out.println("Number is not valid try again! ");
+            }
+        }
 
 
     }
