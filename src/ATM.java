@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.WeakHashMap;
 
 public class ATM {
-
+    private Customer customer;
     public ATM()    {
 
     }
@@ -12,7 +12,7 @@ public class ATM {
     }
 
 
-    public static void mainMenu(String name, int password)  {
+    public void mainMenu(String name, int password)  {
         Scanner scan = new Scanner(System.in);
         System.out.println("Re-enter the details of your new account!");
         String givenName = "";
@@ -20,7 +20,7 @@ public class ATM {
             System.out.print("Enter your name: ");
             givenName = scan.nextLine();
             if (!(givenName.equals(name)))  {
-                System.out.println("\nCannot find name in the database \nTry Again");
+                System.out.println("\nCannot find name in the database. Try Again");
             }
         }
         int repeat = -1;
@@ -30,7 +30,8 @@ public class ATM {
             if (pin == password)   {
                 repeat = 0;
             } else {
-                System.out.print("Wrong name or pin. Please try again. ");
+                System.out.print("Wrong pin. Please try again. ");
+                System.out.println(" ");
             }
         }
         System.out.println("");
@@ -45,6 +46,17 @@ public class ATM {
             if (option > 7) {
                 System.out.println("Number is not valid try again! ");
             }
+        }
+        if (option == 1)    {
+            customer.withDraw();
+        }
+
+        if (option == 2)    {
+            customer.deposit();
+        }
+
+        if (option == 3)    {
+            customer.transferMoney();
         }
 
 

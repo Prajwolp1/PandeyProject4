@@ -7,6 +7,10 @@ public class Account {
         currentBalance = 0;
     }
 
+    public double getCurrentBalance()   {
+        return currentBalance;
+    }
+
 
     public void addMoney(double add) {
         currentBalance += add;
