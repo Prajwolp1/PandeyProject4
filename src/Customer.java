@@ -1,17 +1,17 @@
 
 import java.util.Scanner;
 
-
-
-
 public class Customer {
     private String customerName;
     private int customerPin;
+
+    private Scanner scan;
 
     private Account savingsAccount;
     private Account checkingAccount;
 
     public Customer() {
+        scan = new Scanner(System.in);
         Account savingsAccount = new Account();
         Account checkingAccount = new Account();
         this.savingsAccount = savingsAccount;
@@ -25,7 +25,6 @@ public class Customer {
 
 
     public void newCustomer() {
-        Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to the ATM! \nBefore We Start Please Create a New Account \nPlease Enter Name and Create a Pin. \n");
         System.out.print("Enter your name: ");
         String name = scan.nextLine();
@@ -38,8 +37,7 @@ public class Customer {
     }
 
     public void deposit()   {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Would you like to deposit in your checkings or savings account (s/c): ");
+        System.out.print("Would you like to deposit in your checking or savings account (s/c): ");
         String choice = scan.nextLine();
         System.out.println("How much money would you like to deposit: ");
         double deposit = scan.nextDouble();
@@ -53,8 +51,7 @@ public class Customer {
     }
 
     public void withDraw()  {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Would you like to deposit in your checkings or savings account (s/c): ");
+        System.out.print("Would you like to deposit in your checking or savings account (s/c): ");
         String choice = scan.nextLine();
         int withDraw = 0;
         if (choice.equals("c")) {
@@ -136,16 +133,51 @@ public class Customer {
     }
 
     public void transferMoney() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("What account would you to transfer money to (s/c): ");
+        System.out.print("What account would you like to transfer money to (s/c): ");
         String transferTo = scan.nextLine();
-        System.out.println("You have a balance of " + checkingAccount + " in your checkings account");
+        System.out.println("You have a balance of " + checkingAccount + " in your checking account");
         System.out.println("You have a balance of " + savingsAccount + " in your savings account");
-        System.out.println("How much money will you like to transfer: ");
-        double transfer = scan.nextDouble();
-        scan.nextLine();
-        if (transferTo.equals("s")) {
 
+        if (transferTo.equals("s")) {
+            System.out.print("How much money will you like to transfer to your savings account from your checking account: ");
+            double transfer = scan.nextDouble();
+            scan.nextLine();
+            while (transfer > checkingAccount.getCurrentBalance())  {
+                System.out.println("You do not have that much money in your checking account to transfer! Try Again!");
+                System.out.print("How much money will you like to transfer to your savings account from your checking account: ");
+                transfer = scan.nextDouble();
+                scan.nextLine();
+            }
+            System.out.println("DONE! \nYou just transferred " + transfer + " from your checking account to your savings account! " );
+            checkingAccount.loseMoney(transfer);
+            savingsAccount.addMoney(transfer);
+        }
+
+        if (transferTo.equals("c")) {
+            System.out.print("How much money will you like to transfer to your checking account from your savings account: ");
+            double transfer = scan.nextDouble();
+            scan.nextLine();
+            while (transfer > checkingAccount.getCurrentBalance())  {
+                System.out.println("You do not have that much money in your savings account to transfer! Try Again!");
+                System.out.print("How much money will you like to transfer to your checking account from your savings account: ");
+                transfer = scan.nextDouble();
+                scan.nextLine();
+            }
+            System.out.println("DONE! \nYou just transferred " + transfer + " from your savings account to your checking account! " );
+            savingsAccount.loseMoney(transfer);
+            checkingAccount.addMoney(transfer);
         }
     }
+
+    public String getBalances() {
+        return "Checking Account: " + checkingAccount.getCurrentBalance() + "\nSavings Account: " + savingsAccount.getCurrentBalance();
+    }
+
+    public void changePin() {
+        System.out.print("What would you like to change your pin to: ");
+        int newPin = scan.nextInt();
+        setCustomerPin(newPin);
+    }
+
+
 }

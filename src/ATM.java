@@ -36,29 +36,49 @@ public class ATM {
         }
         System.out.println("");
         System.out.print("Welcome to the ATM! ");
-        System.out.println("Menu \n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money Between Accounts\n4. Get Account Balances\n5. Get Transaction History\n6. Change PIN\n7. Exit");
+        int end = 0;
+        while (end == 0) {
+            System.out.println("Menu \n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money Between Accounts\n4. Get Account Balances\n5. Get Transaction History\n6. Change PIN\n7. Exit");
 
-        int option = 9;
-        while (option > 7) {
-            System.out.print("Enter a valid number: ");
-            option = scan.nextInt();
-            scan.nextLine();
-            if (option > 7) {
-                System.out.println("Number is not valid try again! ");
+            int option = 9;
+            while (option > 7) {
+                System.out.print("Enter a valid number: ");
+                option = scan.nextInt();
+                scan.nextLine();
+                if (option > 7) {
+                    System.out.println("Number is not valid try again! ");
+                }
             }
-        }
-        if (option == 1)    {
-            customer.withDraw();
-        }
+            if (option == 1) {
+                customer.withDraw();
+            }
 
-        if (option == 2)    {
-            customer.deposit();
-        }
+            if (option == 2) {
+                customer.deposit();
+            }
 
-        if (option == 3)    {
-            customer.transferMoney();
-        }
+            if (option == 3) {
+                customer.transferMoney();
+            }
 
+            if (option == 4) {
+                customer.getBalances();
+            }
+
+            if (option == 5) {
+
+            }
+
+            if (option == 6) {
+                customer.changePin();
+            }
+
+            if(option == 7) {
+                System.out.println("Thank you for using the ATM and have a great day! ");
+                end = 1;
+            }
+
+        }
 
     }
 }
