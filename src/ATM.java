@@ -2,24 +2,37 @@ import java.util.Scanner;
 import java.util.WeakHashMap;
 
 public class ATM {
-    private Customer customer;
+    private String customerName;
+    private int customerPin;
     public ATM()    {
 
     }
     public void start() {
-        Customer customer = new Customer();
-        customer.newCustomer();
+        newCustomer();
+    }
+
+    public void newCustomer() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Welcome to the ATM! \nBefore We Start Please Create a New Account \nPlease Enter Name and Create a Pin. \n");
+        System.out.print("Enter your name: ");
+        String name = scan.nextLine();
+        customerName = name;
+        System.out.print("Create a new pin for your account: ");
+        int pin = scan.nextInt();
+        customerPin = pin;
+        mainMenu();
     }
 
 
-    public void mainMenu(String name, int password)  {
+    public void mainMenu()  {
+        Customer customer = new Customer(customerName, customerPin);
         Scanner scan = new Scanner(System.in);
         System.out.println("Re-enter the details of your new account!");
         String givenName = "";
-        while (!(givenName.equals(name)))  {
+        while (!(givenName.equals(customerName)))  {
             System.out.print("Enter your name: ");
             givenName = scan.nextLine();
-            if (!(givenName.equals(name)))  {
+            if (!(givenName.equals(customerName)))  {
                 System.out.println("\nCannot find name in the database. Try Again");
             }
         }
@@ -27,7 +40,7 @@ public class ATM {
         while (repeat == -1)    {
             System.out.print("Enter your pin: ");
             int pin = scan.nextInt();
-            if (pin == password)   {
+            if (pin == customerPin)   {
                 repeat = 0;
             } else {
                 System.out.print("Wrong pin. Please try again. ");
@@ -36,8 +49,8 @@ public class ATM {
         }
         System.out.println("");
         System.out.print("Welcome to the ATM! ");
-        int end = 0;
-        while (end == 0) {
+        int end = 7;
+        while (end == 7) {
             System.out.println("Menu \n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money Between Accounts\n4. Get Account Balances\n5. Get Transaction History\n6. Change PIN\n7. Exit");
 
             int option = 9;
@@ -62,7 +75,7 @@ public class ATM {
             }
 
             if (option == 4) {
-                customer.getBalances();
+                System.out.println(customer.getBalances());
             }
 
             if (option == 5) {
@@ -75,7 +88,6 @@ public class ATM {
 
             if(option == 7) {
                 System.out.println("Thank you for using the ATM and have a great day! ");
-                end = 1;
             }
 
         }
