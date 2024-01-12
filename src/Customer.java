@@ -52,9 +52,8 @@ public class Customer {
                 }
             if (withDraw <= checkingAccount.getCurrentBalance() && withDraw % 5 == 0) {
                 int total = withDraw;
-                int withDrawAmount = 0;
                 System.out.println("How many 20's would you like to withdraw: ");
-                withDrawAmount = scan.nextInt();
+                int withDrawAmount = scan.nextInt();
                 if ((total - (withDrawAmount * 20)) >= 0) {
                     total -= withDrawAmount * 20;
                 } else {
