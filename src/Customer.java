@@ -19,14 +19,12 @@ public class Customer {
     }
 
 
-    public void setCustomerPin(int newPin)  {
-        customerPin = newPin;
-    }
 
 
     public void deposit()   {
         System.out.print("Would you like to deposit in your checking or savings account (s/c): ");
         String choice = scan.nextLine();
+        System.out.println();
         System.out.print("How much money would you like to deposit: ");
         double deposit = scan.nextDouble();
         scan.nextLine();
@@ -41,6 +39,7 @@ public class Customer {
     public void withDraw()  {
         System.out.print("Would you like to withdraw from your checking or savings account (s/c): ");
         String choice = scan.nextLine();
+        System.out.println();
         System.out.print("How much money would you like to withdraw: ");
         int withDraw = scan.nextInt();
         if (choice.equals("c")) {
@@ -52,30 +51,33 @@ public class Customer {
                 }
             if (withDraw <= checkingAccount.getCurrentBalance() && withDraw % 5 == 0) {
                 int total = withDraw;
-                System.out.println("How many 20's would you like to withdraw: ");
+                System.out.print("How many 20's would you like to withdraw: ");
                 int withDrawAmount = scan.nextInt();
                 if ((total - (withDrawAmount * 20)) >= 0) {
                     total -= withDrawAmount * 20;
                 } else {
                     System.out.println("Cannot retrieve that many 20's");
                 }
-                System.out.println("How many 10's would you like to withdraw: ");
-                withDrawAmount = scan.nextInt();
-                if ((total - (withDrawAmount * 10)) >= 0) {
-                    total -= withDrawAmount * 10;
-                } else {
-                    System.out.println("Cannot retrieve that many 10's");
+                if (total != 0) {
+                    System.out.print("How many 10's would you like to withdraw: ");
+                    withDrawAmount = scan.nextInt();
+                    if ((total - (withDrawAmount * 10)) >= 0) {
+                        total -= withDrawAmount * 10;
+                    } else {
+                        System.out.println("Cannot retrieve that many 10's");
+                    }
+                    if (total != 0) {
+                        System.out.print("How many 5's would you like to withdraw: ");
+                        withDrawAmount = scan.nextInt();
+                        if ((total - (withDrawAmount * 5)) >= 0) {
+                            total -= withDrawAmount * 5;
+                        } else {
+                            System.out.println("Cannot retrieve that many 5's");
+                        }
+                        System.out.println("You were given " + total / 5 + " 5's for the remaining amount");
+                        checkingAccount.loseMoney(withDraw);
+                    }
                 }
-                System.out.println("How many 5's would you like to withdraw: ");
-                withDrawAmount = scan.nextInt();
-                if ((total - (withDrawAmount * 5)) >= 0) {
-                    total -= withDrawAmount * 5;
-                } else {
-                    System.out.println("Cannot retrieve that many 5's");
-                }
-                System.out.println(total);
-                System.out.println("You were given " + total / 5 + " 5's for the remaining amount");
-                checkingAccount.loseMoney(withDraw);
             }
         }
         if (choice.equals("s")) {
@@ -85,31 +87,30 @@ public class Customer {
             if (withDraw % 5 != 0) {
                 System.out.println("Invalid Amount! ");
             }
-            if (withDraw < savingsAccount.getCurrentBalance() && withDraw % 5 == 0) {
+            if (withDraw <= savingsAccount.getCurrentBalance() && withDraw % 5 == 0) {
                 int total = withDraw;
-                int withDrawAmount = 0;
                 System.out.print("How many 20's would you like to withdraw: ");
-                withDrawAmount = scan.nextInt();
-                if ((total - (withDrawAmount * 20)) > 0) {
-                    total -= withDrawAmount;
+                int withDrawAmount = scan.nextInt();
+                if ((total - (withDrawAmount * 20)) >= 0) {
+                    total -= withDrawAmount * 20;
                 } else {
                     System.out.println("Cannot retrieve that many 20's");
                 }
                 System.out.print("How many 10's would you like to withdraw: ");
                 withDrawAmount = scan.nextInt();
-                if ((total - (withDrawAmount * 10)) > 0) {
-                    total -= withDrawAmount;
+                if ((total - (withDrawAmount * 10)) >= 0) {
+                    total -= withDrawAmount * 10;
                 } else {
                     System.out.println("Cannot retrieve that many 10's");
                 }
                 System.out.print("How many 5's would you like to withdraw: ");
                 withDrawAmount = scan.nextInt();
-                if ((total - (withDrawAmount * 5)) > 0) {
-                    total -= withDrawAmount;
+                if ((total - (withDrawAmount * 5)) >= 0) {
+                    total -= withDrawAmount * 5;
                 } else {
                     System.out.println("Cannot retrieve that many 5's");
                 }
-                System.out.println("You were given " + total % 5 + " 5's for the remaining amount");
+                System.out.println("You were given " + total / 5 + " 5's for the remaining amount");
                 savingsAccount.loseMoney(withDraw);
             }
         }
@@ -124,7 +125,6 @@ public class Customer {
         if (transferTo.equals("s")) {
             System.out.print("How much money will you like to transfer to your savings account from your checking account: ");
             double transfer = scan.nextDouble();
-            scan.nextLine();
             while (transfer > checkingAccount.getCurrentBalance())  {
                 System.out.println("You do not have that much money in your checking account to transfer! Try Again!");
                 System.out.print("How much money will you like to transfer to your savings account from your checking account: ");
@@ -154,12 +154,6 @@ public class Customer {
 
     public String getBalances() {
         return "Checking Account: " + checkingAccount.getCurrentBalance() + "\nSavings Account: " + savingsAccount.getCurrentBalance();
-    }
-
-    public void changePin() {
-        System.out.print("What would you like to change your pin to: ");
-        int newPin = scan.nextInt();
-        setCustomerPin(newPin);
     }
 
 
