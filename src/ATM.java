@@ -47,7 +47,7 @@ public class ATM {
         System.out.println("");
         System.out.print("Welcome to the ATM! ");
         while (end != 7) {
-            System.out.println("Menu \n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money Between Accounts\n4. Get Account Balances\n5. Get Transaction History\n6. Change PIN\n7. Exit");
+            System.out.println("\n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money Between Accounts\n4. Get Account Balances\n5. Get Transaction History\n6. Change PIN\n7. Exit");
 
             int option = 9;
             while (option > 7) {
@@ -78,12 +78,14 @@ public class ATM {
             }
 
             if (option == 5) {
-
+                System.out.println(customer.getTransactionHistory());
+                System.out.println(customer.getSReceipt("Checked Transaction History!"));
                 reEnterPin();
             }
 
             if (option == 6) {
                 changePin();
+                System.out.println(customer.getSReceipt("Changed Pin!"));
                 reEnterPin();
             }
 
@@ -99,17 +101,20 @@ public class ATM {
         System.out.print("Would you like to do anything more (Y/N): ");
         String more = scan.next();
         if (more.equals("Y")) {
-            System.out.print("Re-enter your pin: ");
-            int check = scan.nextInt();
-            if (check == customerPin) {
-                mainMenu();
+            int repeat = 0;
+            while (repeat == 0) {
+                System.out.print("Re-enter your pin: ");
+                int check = scan.nextInt();
+                if (check == customerPin) {
+                    repeat = 1;
+                    mainMenu();
+                } else {
+                    System.out.println("Invalid Pin");
+                }
             }
-            else {
-                System.out.println("Invalid Pin");
-                end = 7;
-            }
-        }   else {
-            end = 7;
+        }
+        else {
+            System.out.println("Thank you for using the ATM and have a great day! ");
         }
     }
 

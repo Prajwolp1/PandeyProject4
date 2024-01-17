@@ -10,12 +10,15 @@ public class Customer {
     private Account savingsAccount;
     private Account checkingAccount;
 
+    private TransactionHistory transactions;
     public Customer(String name, int pin) {
         scan = new Scanner(System.in);
         Account savingsAccount = new Account();
         Account checkingAccount = new Account();
         this.savingsAccount = savingsAccount;
         this.checkingAccount = checkingAccount;
+        TransactionHistory transactionHistory = new TransactionHistory();
+        this.transactions = transactionHistory;
     }
 
 
@@ -30,10 +33,13 @@ public class Customer {
         scan.nextLine();
         if (choice.equals("c"))   {
             checkingAccount.addMoney(deposit);
+            System.out.println(getAReceipt("Deposited " + deposit +" dollars into your checkings account. "));
         }
         if (choice.equals("s"))   {
             savingsAccount.addMoney(deposit);
+            System.out.println(getAReceipt("Deposited " + deposit +" dollars into your savings account. "));
         }
+
     }
 
     public void withDraw()  {
@@ -75,9 +81,11 @@ public class Customer {
                             System.out.println("Cannot retrieve that many 5's");
                         }
                         System.out.println("You were given " + total / 5 + " 5's for the remaining amount");
-                        checkingAccount.loseMoney(withDraw);
+
                     }
                 }
+                checkingAccount.loseMoney(withDraw);
+                System.out.println(getAReceipt("You withdrew " + withDraw + " from your checkings account. "));
             }
         }
         if (choice.equals("s")) {
@@ -96,22 +104,28 @@ public class Customer {
                 } else {
                     System.out.println("Cannot retrieve that many 20's");
                 }
-                System.out.print("How many 10's would you like to withdraw: ");
-                withDrawAmount = scan.nextInt();
-                if ((total - (withDrawAmount * 10)) >= 0) {
-                    total -= withDrawAmount * 10;
-                } else {
-                    System.out.println("Cannot retrieve that many 10's");
+                if (total != 0) {
+                    System.out.print("How many 10's would you like to withdraw: ");
+                    withDrawAmount = scan.nextInt();
+                    if ((total - (withDrawAmount * 10)) >= 0) {
+                        total -= withDrawAmount * 10;
+                    } else {
+                        System.out.println("Cannot retrieve that many 10's");
+                    }
+                    if (total != 0) {
+                        System.out.print("How many 5's would you like to withdraw: ");
+                        withDrawAmount = scan.nextInt();
+                        if ((total - (withDrawAmount * 5)) >= 0) {
+                            total -= withDrawAmount * 5;
+                        } else {
+                            System.out.println("Cannot retrieve that many 5's");
+                        }
+                        System.out.println("You were given " + total / 5 + " 5's for the remaining amount");
+
+                    }
                 }
-                System.out.print("How many 5's would you like to withdraw: ");
-                withDrawAmount = scan.nextInt();
-                if ((total - (withDrawAmount * 5)) >= 0) {
-                    total -= withDrawAmount * 5;
-                } else {
-                    System.out.println("Cannot retrieve that many 5's");
-                }
-                System.out.println("You were given " + total / 5 + " 5's for the remaining amount");
                 savingsAccount.loseMoney(withDraw);
+                System.out.println(getAReceipt("You withdrew " + withDraw + " from your savings account. "));
             }
         }
     }
@@ -131,9 +145,9 @@ public class Customer {
                 transfer = scan.nextDouble();
                 scan.nextLine();
             }
-            System.out.println("DONE! \nYou just transferred " + transfer + " from your checking account to your savings account! " );
             checkingAccount.loseMoney(transfer);
             savingsAccount.addMoney(transfer);
+            System.out.println("DONE!" + getAReceipt( "just transferred " + transfer + " from your checking account to your savings account! " ));
         }
 
         if (transferTo.equals("c")) {
@@ -146,15 +160,36 @@ public class Customer {
                 transfer = scan.nextDouble();
                 scan.nextLine();
             }
-            System.out.println("DONE! \nYou just transferred " + transfer + " from your savings account to your checking account! " );
             savingsAccount.loseMoney(transfer);
             checkingAccount.addMoney(transfer);
+            System.out.println("DONE!" + getAReceipt(" just transferred " + transfer + " from your savings account to your checking account! " ));
         }
     }
 
-    public String getBalances() {
-        return "Checking Account: " + checkingAccount.getCurrentBalance() + "\nSavings Account: " + savingsAccount.getCurrentBalance();
+    public String getTransactionHistory()   {
+        return transactions.getHistory();
     }
+    public String getBalances() {
+        return "\nChecking Account: " + checkingAccount.getCurrentBalance() + "\nSavings Account: " + savingsAccount.getCurrentBalance() + "\n";
+    }
+
+    public String getAReceipt(String action)  {
+        String newStr = "\n" + transactions.getATransaction();
+        newStr += "\n--------------------\n" + action + "\n--------------------";
+        newStr += getBalances();
+        transactions.addToHistory(newStr);
+        return newStr;
+    }
+
+    public String getSReceipt(String action)  {
+        String newStr = "\n" + transactions.getSTransaction();
+        newStr += "\n--------------------\n" + action + "\n--------------------";
+        transactions.addToHistory(newStr);
+        return newStr;
+    }
+
+
+
 
 
 }
