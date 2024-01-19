@@ -11,12 +11,13 @@ public class ATM {
         scan = new Scanner(System.in);
         end = 0;
     }
-    public void start() {
-        newCustomer();
-    }
 
     public void setCustomerPin(int newPin)  {
         customerPin = newPin;
+    }
+
+    public void start() {
+        newCustomer();
     }
 
     public void newCustomer() {

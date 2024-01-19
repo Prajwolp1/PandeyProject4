@@ -9,9 +9,6 @@ public class TransactionHistory {
         s = 0;
     }
 
-    public void addToHistory(String newAction)  {
-        history += "\n" + newAction;
-    }
     public String getHistory()  {
         return history;
     }
@@ -40,6 +37,10 @@ public class TransactionHistory {
         else {
             return "S" + s;
         }
+    }
+
+    public void addToHistory(String newAction)  {
+        history += "\n" + newAction;
     }
 
 

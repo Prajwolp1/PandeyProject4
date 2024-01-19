@@ -21,8 +21,27 @@ public class Customer {
         this.transactions = transactionHistory;
     }
 
+    public String getTransactionHistory()   {
+        return transactions.getHistory();
+    }
+    public String getBalances() {
+        return "\nChecking Account: " + checkingAccount.getCurrentBalance() + "\nSavings Account: " + savingsAccount.getCurrentBalance() + "\n";
+    }
 
+    public String getAReceipt(String action)  {
+        String newStr = "\n" + transactions.getATransaction();
+        newStr += "\n--------------------\n" + action + "\n--------------------";
+        newStr += getBalances();
+        transactions.addToHistory(newStr);
+        return newStr;
+    }
 
+    public String getSReceipt(String action)  {
+        String newStr = "\n" + transactions.getSTransaction();
+        newStr += "\n--------------------\n" + action + "\n--------------------";
+        transactions.addToHistory(newStr);
+        return newStr;
+    }
 
     public void deposit()   {
         System.out.print("Would you like to deposit in your checking or savings account (s/c): ");
@@ -166,27 +185,7 @@ public class Customer {
         }
     }
 
-    public String getTransactionHistory()   {
-        return transactions.getHistory();
-    }
-    public String getBalances() {
-        return "\nChecking Account: " + checkingAccount.getCurrentBalance() + "\nSavings Account: " + savingsAccount.getCurrentBalance() + "\n";
-    }
 
-    public String getAReceipt(String action)  {
-        String newStr = "\n" + transactions.getATransaction();
-        newStr += "\n--------------------\n" + action + "\n--------------------";
-        newStr += getBalances();
-        transactions.addToHistory(newStr);
-        return newStr;
-    }
-
-    public String getSReceipt(String action)  {
-        String newStr = "\n" + transactions.getSTransaction();
-        newStr += "\n--------------------\n" + action + "\n--------------------";
-        transactions.addToHistory(newStr);
-        return newStr;
-    }
 
 
 
