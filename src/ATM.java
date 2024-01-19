@@ -11,11 +11,9 @@ public class ATM {
         scan = new Scanner(System.in);
         end = 0;
     }
-
     public void setCustomerPin(int newPin)  {
         customerPin = newPin;
     }
-
     public void start() {
         newCustomer();
     }
@@ -28,7 +26,7 @@ public class ATM {
         System.out.print("Create a new pin for your account: ");
         customerPin = scan.nextInt();
         ConsoleUtility.clearScreen();
-        customer = new Customer(customerName, customerPin);
+        customer = new Customer();
         System.out.println("Re-enter the pin of your new account!");
         int repeat = -1;
         while (repeat == -1)    {
